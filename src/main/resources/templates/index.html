@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🌤️ Simple Weather App</h1>
+        <form action="/weather" method="post">
+            <input type="text" name="city" placeholder="Enter city name" required>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+
+        <div th:if="${city}">
+            <h2 th:text="${city}"></h2>
+            <p><span th:text="${temperature}"></span> °C</p>
+            <p th:text="${description}"></p>
+            <img th:src="'https://openweathermap.org/img/wn/' + ${icon} + '@2x.png'">
+        </div>
+    </div>
+</body>
+</html>
