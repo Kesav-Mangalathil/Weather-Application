@@ -3,24 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather App</title>
-    <link rel="stylesheet" href="/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 50px;
+        }
+        .weather-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        img {
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🌤️ Simple Weather App</h1>
-        <form action="/weather" method="post">
-            <input type="text" name="city" placeholder="Enter city name" required>
-            <button type="submit">Get Weather</button>
+
+    <div class="weather-box">
+        <h1>Weather App</h1>
+
+        <!-- Form to enter city -->
+        <form th:action="@{/weather}" method="post">
+            <input type="text" name="city" placeholder="Enter city name" required />
+            <input type="submit" value="Get Weather" />
         </form>
 
-        <div th:if="${error}" class="error" th:text="${error}"></div>
+        <hr />
 
+        <!-- Display weather info -->
         <div th:if="${city}">
-            <h2 th:text="${city}"></h2>
-            <p><span th:text="${temperature}"></span> °C</p>
-            <p th:text="${description}"></p>
-            <img th:src="'https://openweathermap.org/img/wn/' + ${icon} + '@2x.png'">
+            <h2 th:text="${city}">City Name</h2>
+            <p>Temperature: <span th:text="${temperature}">0</span> °C</p>
+            <p>Description: <span th:text="${description}">Clear</span></p>
+            <img th:src="@{'https://openweathermap.org/img/wn/' + ${icon} + '@2x.png'}" 
+                 alt="Weather Icon"/>
+        </div>
+
+        <!-- Display error -->
+        <div th:if="${error}" class="error">
+            <p th:text="${error}">Error message</p>
         </div>
     </div>
+
 </body>
 </html>
